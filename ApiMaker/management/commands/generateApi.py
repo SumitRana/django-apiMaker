@@ -7,16 +7,17 @@ class Command(BaseCommand):
 
     code_string = '''from django.utils.decorators import method_decorator
 from django.http import JsonResponse
+from .models import {0}
+from django.views import View
 import json
 
 class {0}HttpInterface(View):
 
-    @method_decorator(attribute_access_blocker(['meal_time'],'get'))
     def get(self,request):
         result = dict()
         status = 200
         try:
-            post_data = json.loads(request.GET['q'])
+            post_data = request.GET
             print post_data
             diets = {0}.objects.filter(**post_data)
             result['result'] = "SUCCESS"
