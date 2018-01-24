@@ -20,19 +20,19 @@ class Serialize:
 def attribute_access(allow=None,block=None,request_type="get"):
 	def outer(func):
 		def wrapper(request):
-			print "in access blocker"
-			print list_of_attributes
 			result = dict()
 			try:
 				if request_type is "get":
 					post_data = json.loads(request.GET['q'])
 				elif request_type is "post":
 					post_data = json.loads(request.body)
+					if "multipart/form-data" in request.META['CONTENT_TYPE']:
+						post_data = request.POST
 				elif request_type is "delete":
 					post_data = json.loads(request.body)
 
 				if allow is None and block is None:
-					raise Exception("server Error : allow and block both cannot be None")
+					raise Exception("Server Error : allow and block both cannot be None")
 
 				if block is not None:
 					# access block
@@ -41,7 +41,6 @@ def attribute_access(allow=None,block=None,request_type="get"):
 					# access provide
 					unallowed_fields = list(set(list(post_data)).difference(set(list(list_of_attributes))))
 
-				print(unallowed_fields)
 				if len(unallowed_fields) is not 0:
 					status = 403
 					result['result'] = str(unallowed_fields)+" : are private to server."
