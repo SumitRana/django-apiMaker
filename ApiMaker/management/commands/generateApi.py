@@ -63,16 +63,17 @@ class {0}HttpInterface(View):
 
     template_for_file_based_models = '''from django.utils.decorators import method_decorator
 from django.http import JsonResponse
+from .models import {0}
 import json
 
-class PostHttpInterface(View):
+class {0}HttpInterface(View):
 
     def get(self,request):
         result = dict()
         status = 200
         try:
             post_data = request.GET
-            diets = Post.objects.filter(**post_data)
+            diets = {0}.objects.filter(**post_data)
             result['result'] = "SUCCESS"
             result['data'] = [ Serialize.serializeDjangoModel(diet) for diet in diets]
         except Exception as e:
@@ -94,7 +95,7 @@ class PostHttpInterface(View):
             for fkey in request.FILES.keys():
                 args[str(fkey)] = request.FILES[fkey]
             
-            p = Post(**args)
+            p = {0}(**args)
             p.save()
             result['result'] = "SUCCESS"
         except Exception as e:
@@ -110,7 +111,7 @@ class PostHttpInterface(View):
         status = 200
         try:
             post_data = json.loads(request.body)
-            Post.objects.get(pk=post_data['id']).delete()
+            {0}.objects.get(pk=post_data['id']).delete()
             result['result'] = "SUCCESS"
         except Exception as e:
             result['result'] = "FAILURE"
