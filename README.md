@@ -18,7 +18,12 @@ Advantages :
    Run Migrations and migrate to the database.
 
 2. In project Directory :
-    Run : python manage.py generateApi <appName> <modelName>
+    Run : 
+
+    ```console
+    foo@bar:~$ python manage.py generateApi <appName> <modelName>
+
+    ```
 
     On successful Execution of command : A Interface file will be created .
 
