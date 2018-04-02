@@ -17,6 +17,15 @@ Advantages :
 1. Define models within the app , add app to installed apps in settings . 
    Run Migrations and migrate to the database.
 
+2. In settings.py add 'ApiMaker' to installed apps .
+
+    ```python
+    INSTALLED_APPS = [
+        ...
+        'ApiMaker'
+    ]
+    ```
+
 2. In project Directory :
     Run : 
 
